@@ -7,6 +7,7 @@ import { Entypo } from "@expo/vector-icons";
 import SearchInput from "@/components/SearchInput";
 import PromoCarousel from "@/components/PromoCarousel";
 import ServiceGrid from "@/components/ServiceGrid";
+import { Link } from "expo-router";
 
 export default function HomeScreen() {
   return (
@@ -20,6 +21,10 @@ export default function HomeScreen() {
             </TouchableOpacity>
           </MaxWidthWrapper>
 
+          <Link href="./auth" style={{ marginBottom: 20, color: "blue" }}>
+            Ke Halaman Auth (Testing)
+          </Link>
+
           <MaxWidthWrapper className="mt-6">
             <AppText className="text-3xl font-poppins-bold tracking-tighter text-slate-900">
               Selamat Datang!
@@ -30,16 +35,22 @@ export default function HomeScreen() {
             <SearchInput />
           </MaxWidthWrapper>
 
-        
           <MaxWidthWrapper>
             <PromoCarousel />
           </MaxWidthWrapper>
 
           <MaxWidthWrapper className="mt-8">
             <View className="flex-row justify-between items-center mb-2">
-              <AppText variant="medium" className="text-2xl tracking-tight text-slate-900">Services</AppText>
+              <AppText
+                variant="medium"
+                className="text-2xl tracking-tight text-slate-900"
+              >
+                Services
+              </AppText>
               <TouchableOpacity>
-                <AppText className="text-slate-500 font-poppins-light text-lg">See All</AppText>
+                <AppText className="text-slate-500 font-poppins-light text-lg">
+                  See All
+                </AppText>
               </TouchableOpacity>
             </View>
             <ServiceGrid />
