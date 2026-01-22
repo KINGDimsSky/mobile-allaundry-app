@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
-import { View, TextInput, Button, Alert, StyleSheet, Text } from 'react-native';
-import { supabase } from '@/lib/supabase'; // Sesuaikan path-nya
+import { View, TextInput, Button, Alert, StyleSheet, Text, Image, Pressable } from 'react-native';
+import { supabase } from '@/lib/supabase'; 
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { AppText } from '@/components/ui/app-text';
+import { AntDesign } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 
 export default function AuthTestPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // Fungsi Register (Sign Up)
   async function signUpWithEmail() {
@@ -39,38 +44,58 @@ export default function AuthTestPage() {
     setLoading(false);
   }
 
+  const onpressButton = () => {
+    Alert.alert('Tombol ditekan!');
+  }
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Laundry App - KING Test Auth</Text>
-      <TextInput
-        placeholder="Nama Lengkap"
-        onChangeText={(text) => setFullName(text)}
-        style={styles.input}
-      />
-      <TextInput
-        placeholder="Email"
-        onChangeText={(text) => setEmail(text)}
-        style={styles.input}
-        autoCapitalize="none"
-      />
-      <TextInput
-        placeholder="Password"
-        secureTextEntry={true}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.input}
-      />
-      <View style={styles.buttonContainer}>
-        <Button title={loading ? 'Proses...' : 'Daftar Baru'} onPress={signUpWithEmail} disabled={loading} />
-        <View style={{ marginVertical: 10 }} />
-        <Button title={loading ? 'Proses...' : 'Masuk (Login)'} onPress={signInWithEmail} color="#4CAF50" disabled={loading} />
-      </View>
-    </View>
+    <SafeAreaView className='min-h-screen bg-white'>
+        <View className='flex flex-col gap-4 mt-14  items-center'>
+           <AppText className='text-5xl font-poppins-bold tracking-tighter'>
+              AL Laundry
+           </AppText>
+           <AppText className='text-sm tracking-tight w-full px-12 text-center '>
+              Dengan AL Laundry, nikmati kemudahan layanan laundry kapan saja, di mana saja!
+           </AppText>
+        
+        <View className='w-full h-80 mt-8 flex items-center justify-center relative'>
+          <Image source={require("@/assets/Category/LaundrySketch.png")} className='w-full h-full' />
+        </View>
+
+        <View className='flex flex-row gap-12 w-full px-14  mt-8'> 
+          <Pressable onPress={() => router.push('/auth/signin')} className='flex bg-emerald-200 items-center p-4 rounded-lg w-40'>
+            <AppText className='text-xl font-poppins-semibold tracking-tight'>
+              Login
+            </AppText>
+          </Pressable>
+          <Pressable onPress={() => router.push('/auth/signup')} className='flex bg-emerald-300 items-center p-4 rounded-lg w-40'>
+            <AppText className='text-xl font-poppins-semibold tracking-tight'>
+              Sign Up
+            </AppText>
+          </Pressable>
+        </View>
+
+        <View className='mt-4'>
+            <AppText className='text-base tracking-tight'>
+                Or Continue With
+            </AppText>
+        </View>
+
+        <View className='flex flex-row gap-6 w-full px-24 justify-center'>
+            <Pressable onPress={onpressButton} className='flex flex-row justify-center  items-center gap-4 py-3 px-6 w-full bg-slate-200 rounded-full'>
+               <AntDesign name="google" size={26} color="black" />
+               <AppText className='text-lg tracking-tighter font-poppins-semibold'>
+                  Login With Google  
+               </AppText>
+            </Pressable> 
+        </View>
+
+        </View>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { padding: 20, flex: 1, justifyContent: 'center' },
-  title: { fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginBottom: 20 },
-  input: { borderBottomWidth: 1, marginBottom: 15, padding: 10 },
-  buttonContainer: { marginTop: 20 },
-});
+
+})
+
